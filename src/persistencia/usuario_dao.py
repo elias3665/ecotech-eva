@@ -26,7 +26,7 @@ class UsuarioDAO:
         cursor = conexion.cursor()
         try:
             marca = marcador_sql()
-            sql = "SELECT id, nombre_usuario, password_hash, id_empleado, rol FROM usuario WHERE nombre_usuario = ?"
+            sql = f"SELECT id, nombre_usuario, password_hash, id_empleado, rol FROM usuario WHERE nombre_usuario = {marca}"
             cursor.execute(sql, (nombre.strip().lower(),))
             fila = cursor.fetchone()
             if not fila:

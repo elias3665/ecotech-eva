@@ -1,35 +1,29 @@
+import sys
 from persistencia.crear_bd import crear_tablas
-from menu.menu_empleado import menu_empleado
-from menu.menu_proyecto import menu_proyecto
-from menu.menu_registro import menu_registro
-
+from menu.menu_usuario import solicitar_login, menu_privado
 def main():
     try:
         crear_tablas()
     except Exception as e:
         print(f"Error crítico al inicializar la base de datos: {e}")
-        return
+        sys.exit(1)
 
     while True:
-        print("\n===== ECOTECH: SISTEMA DE CONTROL INTEGRADO =====")
-        print("1. Módulo de Empleados")
-        print("2. Módulo de Proyectos")
-        print("3. Módulo de Registros de Tiempo (Relación Multi-Entidad)")
+        print("\n===== ECOTECH: CONTROL INTEGRADO DE ACCESO =====")
+        print("1. Iniciar Sesión en el Sistema")
         print("0. Salir de la Aplicación")
 
-        opcion = input("Seleccione una opción del sistema: ").strip()
+        opcion = input("Seleccione una opción: ").strip()
 
         if opcion == "1":
-            menu_empleado()
-        elif opcion == "2":
-            menu_proyecto()
-        elif opcion == "3":
-            menu_registro()
+            usuario_autenticado = solicitar_login()
+            if usuario_autenticado:
+                menu_privado(usuario_autenticado)
         elif opcion == "0":
-            print("Cerrando sesión en EcoTech. Hasta luego.")
+            print("Cerrando EcoTech de forma segura. Hasta luego.")
             break
         else:
-            print("Opción no válida. Intente con los números del menú.")
+            print("Opción no válida. Intente nuevamente.")
 
 if __name__ == "__main__":
     main()
